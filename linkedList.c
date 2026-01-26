@@ -4,26 +4,52 @@
 ListNode* createListNode(ContentType initialValue) {
     ListNode* node = malloc(sizeof(ListNode));
     node->next = NULL;
+    node->prev = NULL;
     node->content = initialValue;
     return node;
 }
 
-ListNode* createLinkedList() {
+LinkedList* createLinkedList() {
+    LinkedList* list = malloc(sizeof(LinkedList));
     ListNode* head = createListNode(NULL);
-    return head;
+    list->head = head;
+    list->head->prev = head;
+    list->head->next = head;
+    return list;
 }
 
-void destroyLinkedList(ListNode* head) {
-    ListNode* next = head;
-    while(next != NULL) {
+void destroyLinkedList(LinkedList* list) {
+    ListNode* next = list->head->next;
+    while(next != list->head) {
         ListNode* temp = next->next;
         free(next);
         next = temp;
     }
+    free(list);
 }
 
-void insertValueInList(ListNode* head, ContentType value) {
+void insertValueInListStart(LinkedList* list, ContentType value) {
     ListNode* newNode = createListNode(value);
-    newNode->next = head->next;
-    head->next = newNode;
+    newNode->prev = list->head;
+    newNode->next = list->head->next;
+    list->head->next->prev = newNode;
+    list->head->next = newNode;
+}
+
+void insertValueInListEnd(LinkedList* list, ContentType value) {
+    ListNode* newNode = createListNode(value);
+    newNode->next = list->head;
+    newNode->prev = list->head->prev;
+    list->head->prev->next = newNode;
+    list->head->prev = newNode;
+}
+
+void removeNode(ListNode* node) {
+    if(node->prev != NULL) {
+        node->prev->next = node->next;
+    }
+    if(node->next != NULL) {
+        node->next->prev = node->prev;
+    }
+    free(node);
 }
