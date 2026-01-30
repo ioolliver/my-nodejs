@@ -1,17 +1,22 @@
 #include "stdlib.h"
 #include "linkedList.h"
 
-ListNode* createListNode(ContentType initialValue) {
+ListNode* createEmptyListNode() {
     ListNode* node = malloc(sizeof(ListNode));
     node->next = NULL;
     node->prev = NULL;
+    return node;
+}
+
+ListNode* createListNode(ContentType initialValue) {
+    ListNode* node = createEmptyListNode();
     node->content = initialValue;
     return node;
 }
 
 LinkedList* createLinkedList() {
     LinkedList* list = malloc(sizeof(LinkedList));
-    ListNode* head = createListNode(NULL);
+    ListNode* head = createEmptyListNode();
     list->head = head;
     list->head->prev = head;
     list->head->next = head;

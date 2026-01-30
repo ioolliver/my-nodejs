@@ -2,17 +2,17 @@
 
 #ifndef LINKEDLIST
 
-/* Circular linked list */
-typedef struct LinkedList {
-    ListNode* head;
-} LinkedList;
-
 /* Double-linked list node */
 typedef struct ListNode {
     ContentType content;
     struct ListNode* next;
     struct ListNode* prev;
 } ListNode;
+
+/* Circular linked list */
+typedef struct LinkedList {
+    ListNode* head;
+} LinkedList;
 
 LinkedList* createLinkedList();
 ListNode* createListNode(ContentType initialValue);
